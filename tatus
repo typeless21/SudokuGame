@@ -1,0 +1,49 @@
+[1mdiff --git a/src/app/app.component.html b/src/app/app.component.html[m
+[1mindex 5226d57f..9519f655 100644[m
+[1m--- a/src/app/app.component.html[m
+[1m+++ b/src/app/app.component.html[m
+[36m@@ -18,3 +18,5 @@[m
+   </li>[m
+ </ul>[m
+ [m
+[32m+[m
+[32m+[m[32m<app-login></app-login>[m
+[1mdiff --git a/src/app/app.module.ts b/src/app/app.module.ts[m
+[1mindex 0c20cab9..68f45598 100644[m
+[1m--- a/src/app/app.module.ts[m
+[1m+++ b/src/app/app.module.ts[m
+[36m@@ -1,15 +1,21 @@[m
+ import { BrowserModule } from '@angular/platform-browser';[m
+ import { NgModule } from '@angular/core';[m
+[32m+[m[32mimport { ReactiveFormsModule} from '@angular/forms';[m
+ [m
+ import { AppComponent } from './app.component';[m
+ import { BlockComponent } from './block/block.component';[m
+ import { BoardComponent } from './board/board.component';[m
+[32m+[m[32mimport { LoginComponent } from './login/login.component';[m
+[32m+[m[32mimport { RegisterComponent } from './register/register.component';[m
+ [m
+ @NgModule({[m
+   declarations: [[m
+     AppComponent,[m
+     BlockComponent,[m
+[31m-    BoardComponent[m
+[32m+[m[32m    BoardComponent,[m
+[32m+[m[32m    LoginComponent,[m
+[32m+[m[32m    RegisterComponent,[m
+[32m+[m[32m    ReactiveFormsModule[m
+   ],[m
+   imports: [[m
+     BrowserModule[m
+[1mdiff --git a/src/index.html b/src/index.html[m
+[1mindex dd90bad3..1cd267de 100644[m
+[1m--- a/src/index.html[m
+[1m+++ b/src/index.html[m
+[36m@@ -10,7 +10,6 @@[m
+ </head>[m
+ <body>[m
+   <h1>Test</h1>[m
+[31m-  <h1>afjsfjfj</h1>[m
+   <app-root></app-root>[m
+ </body>[m
+ </html>[m
