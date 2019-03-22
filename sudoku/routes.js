@@ -13,7 +13,7 @@ module.exports = function(app){
   //app.get('/get/:name', incoming2.getName);
   //app.get('/alive/:year', incoming2.getPainterAlive);
   app.get('/get', incoming2.getAll);
-  app.post('/add', incoming2.addBoard);
+  app.post('/addBoard', incoming2.addBoard);
   //app.delete('/delete/:id', incoming2.deletePainter);
   //app.delete('/deleteFound/:name', incoming2.deleteMultiplePainters);
   //app.patch('/update/:id&:name', incoming2.updateUser;

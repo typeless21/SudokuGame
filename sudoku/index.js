@@ -23,6 +23,10 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + "/addForm.htm");  //__dirname satur pilno ceļu, kur atrodas fails
 })
 
+app.get('/addBoard', function(req, res) {
+  res.sendFile(__dirname + "/addBoard.htm");  //__dirname satur pilno ceļu, kur atrodas fails
+})
+
 require('./routes')(app);
 
 var server = app.listen(port, hostname, function(){
