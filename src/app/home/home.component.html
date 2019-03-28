@@ -1,7 +1,10 @@
 <div class="root">
     <ul>
       <li>
-          <a routerLink="/login">Log In</a>
+          <a routerLink="/login" *ngIf="!_authService.loggedIn()">Log In</a>
+      </li>
+      <li>
+          <a *ngIf="_authService.loggedIn()" (click)="_authService.logoutUser()">LogOut</a>
       </li>
       <li>
           <a routerLink="">Guest 'Temp'</a>

@@ -1,4 +1,6 @@
-<p>
-  about works!
-  <a routerLink="/">Home</a>
-</p>
+<div class="col-md-4 mb-3" *ngFor="let dat of data">
+  <p>{{dat.name}}</p>
+  <p>{{dat._id}}</p>
+</div>
+
+<a routerLink="/">Home</a>

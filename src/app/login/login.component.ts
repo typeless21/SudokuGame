@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { AuthService } from '../auth.service';
 export class LoginComponent implements OnInit {
 
   loginUserData = {}
-  constructor(private _auth: AuthService) { }
+  constructor(private _auth: AuthService,
+              private _router: Router ) { }
 
   ngOnInit() {
   }
@@ -18,7 +20,11 @@ export class LoginComponent implements OnInit {
     // console.log(this.loginUserData)
     this._auth.loginUser(this.loginUserData)
       .subscribe(
-        res => console.log(res),
+        res => {
+          console.log(res)
+          localStorage.setItem('token', res.token) // Sets key as 'token' and value as res.token from serv to browsers local storage
+          this._router.navigate(['']) // Redirection link on succesfull authentication
+        },
         err => console.log(err)
       )
   }

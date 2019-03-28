@@ -1,4 +1,5 @@
 const express = require('express')
+const jwt = require('jsonwebtoken')    // Needed for jsonwebtoken
 const router = express.Router()
 const User = require('../models/user')
 const mongoose = require('mongoose')
@@ -12,6 +13,22 @@ mongoose.connect(db, err => {
   }
 })
 
+function verifyToken(req, res, next){
+      if(!req.headers.authorization){
+        return res.status(401).send('Unauthorized1 request')
+      }
+      let token = req.headers.authorization.split(' ')[1] // gets token value
+      if(token === ''){
+        return res.status(401).send('Unauthorized2 request')
+      }
+      let payload = jwt.verify(token, 'key') // Returns decoded token if it is valid
+      if(!payload){
+        return res.status(401).send('Unauthorized3 request')
+      }
+      req.userID = payload.subject
+      next()
+}
+
 router.get('/', (req, res) => {
     res.send('From API route')
 })
@@ -23,7 +40,9 @@ router.post('/register', (req, res) => {
       if(error) {
         console.log(error)
       } else {
-        res.status(200).send(registeredUser)
+        let payload = { subject: registeredUser._id }
+        let token = jwt.sign(payload, 'key') // Generates the token 'key' can be anything
+        res.status(200).send({token}) // Sends token as an object
       }
   })
 })
@@ -40,10 +59,22 @@ router.post('/login', (req, res) => {
         if (user.password !== userData.password){
           res.status(401).send('Invalid password or username')
         } else {
-          res.status(200).send(user)
+          let payload = { subject: user._id }
+          let token = jwt.sign(payload, 'key')
+          res.status(200).send({token})
         }
     }
   })
+})
+
+router.get('/about', verifyToken, (req, res) => {
+  let data = [                          // Code here only runs if verifyToken works
+    {
+      "_id": "1",
+      "name": "Random stuff"
+    }
+  ]
+    res.json(data)
 })
 
 module.exports = router
