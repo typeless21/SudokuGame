@@ -1,10 +1,12 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-block',
   templateUrl: './block.component.html',
   styleUrls: ['./block.component.scss']
 })
+
+
 export class BlockComponent implements OnInit {
 
   @Input() value: string;
@@ -12,21 +14,34 @@ export class BlockComponent implements OnInit {
   @Input() row: number;
   @Input() col: number;
   @Input() square: number;
+  @ViewChild('block') block;
+  isGiven: boolean;
 
   onChange(target: any): void {
     this.value = target.value;
     if (this.value.match(/\b[1-9]\b|$^/g)){
-      target.style.cssText="border-color: grey;";
+      if (this.square % 2 == 0){
+        this.block.nativeElement.style.cssText="border-color: grey; background-color: lightgrey; text-align: center;";
+      }
+      else {
+        this.block.nativeElement.style.cssText="border-color: grey; background-color: rgb(235,235,228); text-align: center;";
+      }
       this.isNumber = true;
     }
     else{
-      target.style.cssText="border-color: red;";
+      if (this.square % 2 == 0){
+        this.block.nativeElement.style.cssText="border-color: red; background-color: lightgrey; text-align: center;";
+      }
+      else {
+        this.block.nativeElement.style.cssText="border-color: red; text-align: center;";
+      }
       this.isNumber = false;
     }
   }
 
   constructor() {
   }
+
 
   getValue(){
     return this.value;
@@ -61,16 +76,19 @@ export class BlockComponent implements OnInit {
     else if (this.row / 3 < 3 && this.col / 3 < 3){
       this.square = 8;
     }
-    this.value = ""+this.row + ""+this.col + ""+this.square;
-    if (this.value != null){
-      if (this.value.toString().match(/\b[1-9]\b|$^/g)){
-        this.isNumber = true;
-      }
-      else{
-        this.isNumber = false;
-      }
+    if(this.value != "0"){
+      this.block.nativeElement.disabled = true;
+      this.isNumber = true;
     }
-
+    else{
+      this.value = "";
+    }
+    if (this.square % 2 == 0){
+      this.block.nativeElement.style.cssText="border-color: grey; background-color: lightgrey; text-align: center;";
+    }
+    else{
+      this.block.nativeElement.style.cssText="border-color: grey; text-align: center;";
+    }
   }
 
 }

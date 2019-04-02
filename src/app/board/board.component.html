@@ -1,6 +1,6 @@
-<ng-container *ngFor="let number of numbers">
-  <app-block [value]="number" [col]="number % 9" [row]="(number / 9) - (( number % 9 ) / 9)|number"></app-block>
-  <ng-container *ngIf="(number+1) % 9 == 0">
+<ng-container *ngFor="let number of numbers; let i = index">
+  <app-block [value]="number" [col]="i % 9" [row]="(i / 9) - (( i % 9 ) / 9)|number"></app-block>
+  <ng-container *ngIf="(i + 1) % 9 == 0">
     <br>
   </ng-container>
 </ng-container>
