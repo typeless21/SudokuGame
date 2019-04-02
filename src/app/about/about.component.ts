@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AboutService } from '../about.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AboutComponent implements OnInit {
 
+  userid: any;
   data = []
   constructor(private _aboutService: AboutService,
               private _router: Router) { }
@@ -17,7 +18,7 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
     this._aboutService.getAbout()
       .subscribe(
-        res => this.data = res,
+        res => this.userid = res,
         err => {
           if (err instanceof HttpErrorResponse){
             if (err.status === 401) {
@@ -26,6 +27,11 @@ export class AboutComponent implements OnInit {
           }
         }
       )
+
+  }
+
+  ngAfterviewInit(){
+    console.log(this.userid);
   }
 
 }

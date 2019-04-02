@@ -25,7 +25,8 @@ function verifyToken(req, res, next){
       if(!payload){
         return res.status(401).send('Unauthorized3 request')
       }
-      req.userID = payload.subject
+      req.userID = payload.userid
+      console.log(req.userID)
       next()
 }
 
@@ -40,7 +41,7 @@ router.post('/register', (req, res) => {
       if(error) {
         console.log(error)
       } else {
-        let payload = { subject: registeredUser._id }
+        let payload = { userid: registeredUser._id }
         let token = jwt.sign(payload, 'key') // Generates the token 'key' can be anything
         res.status(200).send({token}) // Sends token as an object
       }
@@ -59,22 +60,27 @@ router.post('/login', (req, res) => {
         if (user.password !== userData.password){
           res.status(401).send('Invalid password or username')
         } else {
-          let payload = { subject: user._id }
+          let payload = { userid: user._id }
+          //console.log(user._id)
           let token = jwt.sign(payload, 'key')
+          //console.log(token);
           res.status(200).send({token})
+          //console.log(user)
         }
     }
   })
 })
 
 router.get('/about', verifyToken, (req, res) => {
-  let data = [                          // Code here only runs if verifyToken works
-    {
-      "_id": "1",
-      "name": "Random stuff"
-    }
-  ]
-    res.json(data)
+  // let data = [                          // Code here only runs if verifyToken works
+  //   {
+  //     "_id": "1",
+  //     "name": "Random stuff"
+  //   }
+  // ]
+  // res.json(data)
+
+  res.json(req.userID)
 })
 
 module.exports = router
