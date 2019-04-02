@@ -8,7 +8,9 @@ var UserSchema = new Schema({
   saved_game: {type: String, default: ""},
   saved_time: {type: Number, default: ""},
   saved_diff: {type: Number, default: ""},
-  highscore: {type: Number, default: ""}
+  HSEasy: {type: Number, default: ""},
+  HSMedium: {type: Number, default: ""},
+  HSHard: {type: Number, default: ""}
 });
 
 mongoose.model('User', UserSchema);
