@@ -14,6 +14,9 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { AboutService } from './about.service';
+import { MainComponent } from './main/main.component';
+import { DifficultyComponent } from './difficulty/difficulty.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
 
 @NgModule({
@@ -24,7 +27,10 @@ import { AboutService } from './about.service';
     LoginComponent,
     RegisterComponent,
     AboutComponent,
-    HomeComponent
+    HomeComponent,
+    MainComponent,
+    DifficultyComponent,
+    LeaderboardComponent
   ],
   imports: [
     BrowserModule,
