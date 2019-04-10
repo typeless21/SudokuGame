@@ -2,3 +2,24 @@
 body{
   background-color: gray;
 }
+
+$media_queries : (
+    'mobile'    : "(max-width: 375px) and (max-height: 667px)",
+    'desktop'   : "(max-width: 500px) and (min-height: 800px",
+);
+
+@mixin screenSize($breakpoints) {
+    $conditions : ();
+    @each $breakpoint in $breakpoints {
+        // If the key exists in the map
+        $conditions: append(
+            $conditions,
+            #{inspect(map-get($media_queries, $breakpoint))},
+            comma
+        );
+    }
+
+    @media #{$conditions} {
+        @content;
+    }
+}

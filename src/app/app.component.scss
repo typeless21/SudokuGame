@@ -1,0 +1,12 @@
+@import "../styles.scss";
+
+.mainRoot {
+  margin: auto;
+  width: 70%;
+  height: 100%;
+  background-color: white;
+
+  @include screenSize(mobile){
+    background-color: green;
+  }
+}
