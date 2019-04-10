@@ -2,6 +2,7 @@ const express = require('express')
 const jwt = require('jsonwebtoken')    // Needed for token
 const router = express.Router()
 const User = require('../models/user')
+const Board = require('../models/board')
 const mongoose = require('mongoose')
 
 const db = "mongodb+srv://sudokuuser:sudokuuser1234@cluster0-wxkdr.mongodb.net/test?retryWrites=true";
@@ -82,5 +83,6 @@ router.get('/about', verifyToken, (req, res) => {
 
   res.json(req.userID)
 })
+
 
 module.exports = router

@@ -13,17 +13,13 @@ import { AuthGuard} from './auth.guard';
 const routes: Routes = [
     {
         path: '',
-        component: HomeComponent
+        component: MainComponent,
+        //canActivate: [AuthGuard]
     },
     {
         path: 'about',
         component: AboutComponent,
         canActivate: [AuthGuard] // Testing for guarded routes, navigates only if logged in
-    },
-    {
-        path: 'main',
-        component: MainComponent,
-        //canActivate: [AuthGuard]
     },
     {
         path: 'difficulty',
