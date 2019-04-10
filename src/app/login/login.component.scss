@@ -1,0 +1,13 @@
+$colors:  (
+    primary: blue,
+);
+
+
+body {
+  background-color: map-get($colors, primary);
+}
+
+.loginRoot{
+  margin-top: 5%;
+  border-style: dotted;
+}

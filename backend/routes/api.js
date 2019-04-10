@@ -1,5 +1,5 @@
 const express = require('express')
-const jwt = require('jsonwebtoken')    // Needed for jsonwebtoken
+const jwt = require('jsonwebtoken')    // Needed for token
 const router = express.Router()
 const User = require('../models/user')
 const mongoose = require('mongoose')
@@ -26,7 +26,7 @@ function verifyToken(req, res, next){
         return res.status(401).send('Unauthorized3 request')
       }
       req.userID = payload.userid
-      console.log(req.userID)
+      //console.log(req.userID)
       next()
 }
 
@@ -42,7 +42,7 @@ router.post('/register', (req, res) => {
         console.log(error)
       } else {
         let payload = { userid: registeredUser._id }
-        let token = jwt.sign(payload, 'key') // Generates the token 'key' can be anything
+        let token = jwt.sign(payload, 'key') // Generates the token 'key' (can be anything)
         res.status(200).send({token}) // Sends token as an object
       }
   })
