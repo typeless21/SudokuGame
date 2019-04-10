@@ -4,6 +4,9 @@ import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { MainComponent } from './main/main.component';
+import { DifficultyComponent } from './difficulty/difficulty.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { AuthGuard} from './auth.guard';
 
 //This is my case
@@ -16,6 +19,21 @@ const routes: Routes = [
         path: 'about',
         component: AboutComponent,
         canActivate: [AuthGuard] // Testing for guarded routes, navigates only if logged in
+    },
+    {
+        path: 'main',
+        component: MainComponent,
+        //canActivate: [AuthGuard]
+    },
+    {
+        path: 'difficulty',
+        component: DifficultyComponent,
+        //canActivate: [AuthGuard]
+    },
+    {
+        path: 'leaderboard',
+        component: LeaderboardComponent,
+        //canActivate: [AuthGuard]
     },
     {
         path: 'login',
