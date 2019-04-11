@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +37,14 @@ export class AuthService {
   }
 
   setDiff(diff){
-      //console.log(diff)
       return this.http.post<any>(this._gameUrl, diff)
+  }
+
+  private messageSource = new BehaviorSubject('default message');
+  currentMessage = this.messageSource.asObservable();
+
+  changeMessage(message: string) {
+    this.messageSource.next(message)
   }
 
 

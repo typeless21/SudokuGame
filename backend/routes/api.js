@@ -87,8 +87,10 @@ router.get('/about', verifyToken, (req, res) => {
 router.post('/play', (req, res) => {
   let diff = req.body
      Board.find({diff: diff.diff}, function(err, result){
-       let nr = Math.floor(Math.random() * result.length)
-       res.send(result[nr])
+       if (result != undefined){
+         let nr = Math.floor(Math.random() * result.length)
+         res.send(result[nr])
+       }
      });
   })
   // Board.findOne({_id: userData.username}, (error, user) => {

@@ -10,22 +10,19 @@ import { AuthService } from '../auth.service';
 export class DifficultyComponent implements OnInit {
 
   diffData = <any> {}
+  message:string;
+
   constructor(private _auth: AuthService,
-              private _router: Router ) { }
+              private _router: Router) { }
 
   ngOnInit() {
+    this._auth.currentMessage.subscribe(message => this.message = message)
+  }
+  
+  changeDiff(diff) {
+    this._auth.changeMessage(diff)
+    this._router.navigate(['/board'])
   }
 
-  setDiff(diff) {
-    this.diffData.diff = diff
-    this._auth.setDiff(this.diffData)
-      .subscribe(
-        res => {
-          console.log(res)
-          this._router.navigate(['']) // Change later
-        },
-        err => console.log(err)
-      )
-  }
 
 }
