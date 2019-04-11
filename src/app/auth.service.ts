@@ -41,11 +41,11 @@ export class AuthService {
       return this.http.post<any>(this._gameUrl, diff)
   }
 
-  private messageSource = new BehaviorSubject('default message');
-  currentMessage = this.messageSource.asObservable();
+  private diffSource = new BehaviorSubject(null);
+  currentDiff = this.diffSource.asObservable();
 
-  changeMessage(message: string) {
-    this.messageSource.next(message)
+  changeDiff(diff: string) {
+    this.diffSource.next(diff)
   }
 
   saveGame(gameData){

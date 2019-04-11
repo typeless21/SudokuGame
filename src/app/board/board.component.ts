@@ -15,7 +15,7 @@ export class BoardComponent implements OnInit {
   numbers: number[];
   @ViewChildren(BlockComponent) blockComponents : QueryList<BlockComponent>;
   html: String;
-  message: string;
+  diff: string;
   result: any;
 
   constructor(private _auth: AuthService,private _router: Router) {
@@ -23,24 +23,23 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._auth.currentMessage.subscribe(message => this.message = message)
+    this._auth.currentDiff.subscribe(diff => this.diff = diff)
 
-    var diffData = <any>{}
-    diffData.diff = this.message
-    this._auth.setDiff(diffData)
-      .subscribe(
-        res => {
-          this.result = res
-          this.loadBoard()
-          //this._router.navigate(['']) // Change later
-        },
-        err => console.log(err)
-    )
+    if(this.diff != null){
+      var diffData = <any>{}
+      diffData.diff = this.diff
+      this._auth.setDiff(diffData)
+        .subscribe(
+          res => {
+            this.result = res
+            this.loadBoard()
+          },
+          err => console.log(err)
+      )
+    }
 
-
-    //this.blockComponents.changes.subscribe(c => console.log(this.blockComponents.toArray()));
-    //console.log(this.inputComponents.toArray());
   }
+
 
   ngAfterViewInit(){
     this.blockComponents.changes.subscribe(c => this.blockComponents.toArray());
@@ -55,6 +54,7 @@ export class BoardComponent implements OnInit {
       this.numbers.push(number)
     }
     this.startTimer()
+    this._auth.changeDiff(null)
   }
 
   time: number = 0;
@@ -85,15 +85,13 @@ export class BoardComponent implements OnInit {
     var gameData = <any>{}
     gameData.board = numbersString
     gameData.time = this.time
-    gameData.diff = this.message
+    gameData.diff = this.diff
     gameData.id = this.result._id
 
     this._auth.saveGame(gameData)
       .subscribe(
         res => {
-          console.log(res)
-          //localStorage.setItem('token', res.token) // Sets key as 'token' and value as res.token from serv to browsers local storage
-          //this._router.navigate(['']) // The redirected link on succesfull registration
+
         },
         err => console.log(err)
     )
