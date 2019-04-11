@@ -18,6 +18,10 @@ const routes: Routes = [
         //canActivate: [AuthGuard]
     },
     {
+        path:'board',
+        component: BoardComponent
+    },
+    {
         path: 'about',
         component: AboutComponent,
         canActivate: [AuthGuard] // Testing for guarded routes, navigates only if logged in
