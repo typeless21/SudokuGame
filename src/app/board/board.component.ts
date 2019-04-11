@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit,ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { BlockComponent } from '../block/block.component';
 import { Router } from '@angular/router';
@@ -17,17 +17,20 @@ export class BoardComponent implements OnInit {
   html: String;
   diff: string;
   result: any;
-  savedBoard: String;
+  savedBoard: any;
   default: boolean[] = [];
+  continue: boolean
 
-  constructor(private _auth: AuthService,private _router: Router) {
+  constructor(private _auth: AuthService,private _router: Router, private changeDetectorRef: ChangeDetectorRef) {
     //this.numbers = Array(81).fill(0).map((x,i)=>i); // [0,1,2..80]
   }
 
   ngOnInit() {
     this._auth.currentDiff.subscribe(diff => this.diff = diff)
-
-    if(this.diff != null){
+    this._auth.currentCon.subscribe(con => this.continue = con)
+    if(this.continue == false){
+      this._auth.changeCon(true)
+      console.log("Starting new game")
       var diffData = <any>{}
       diffData.diff = this.diff
       this._auth.setDiff(diffData)
@@ -41,6 +44,7 @@ export class BoardComponent implements OnInit {
       )
     }
     else{
+      console.log("Getting saved game")
       this._auth.getSaveGame()
         .subscribe(
           res => {
@@ -55,6 +59,7 @@ export class BoardComponent implements OnInit {
               .subscribe(
                 res => {
                   this.savedBoard = res
+                  console.log(res)
                 },
                 err => console.log(err),
                 complete => this.loadSavedBoard()
@@ -83,7 +88,6 @@ export class BoardComponent implements OnInit {
       this.numbers.push(number)
     }
     this.startTimer()
-    this._auth.changeDiff(null)
   }
 
   loadSavedBoard(){
@@ -103,7 +107,6 @@ export class BoardComponent implements OnInit {
       this.numbers.push(numberSaved)
     }
     this.startTimer()
-    this._auth.changeDiff(null)
   }
 
   time: number = 0;
@@ -148,6 +151,7 @@ export class BoardComponent implements OnInit {
   }
 
   checkWin(){
+    this.changeDetectorRef.detectChanges()
     let allNumbers: boolean = true;
     let gameCompleted: boolean = true;
     let rows: number[][] = [];
@@ -156,9 +160,10 @@ export class BoardComponent implements OnInit {
     rows.push([],[],[],[],[],[],[],[],[]);
     cols.push([],[],[],[],[],[],[],[],[]);
     squares.push([],[],[],[],[],[],[],[],[]);
-    for(let block of this.blockComponents.toArray()){
+    for(var x = 0; x < this.blockComponents.toArray().length; x++){
+    // for(let block of this.blockComponents.toArray()){
+      let block = this.blockComponents.toArray()[x]
       if(block.isNumber == true){
-        console.log(block.value)
         rows[block.row].push(Number(block.value));
         cols[block.col].push(Number(block.value));
         squares[block.square].push(Number(block.value));

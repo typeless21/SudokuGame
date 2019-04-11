@@ -58,6 +58,14 @@ export class AuthService {
     this.diffSource.next(diff)
   }
 
+  private conSource = new BehaviorSubject(null);
+  currentCon = this.conSource.asObservable();
+
+
+  changeCon(con: boolean){
+    this.conSource.next(con)
+  }
+
   saveGame(gameData){
     return this.http.post<any>(this._saveUrl, gameData)
   }

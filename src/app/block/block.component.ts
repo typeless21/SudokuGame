@@ -83,6 +83,9 @@ export class BlockComponent implements OnInit {
     else if (this.value==0){
       this.value = ""
     }
+    else{
+      this.isNumber = true;
+    }
     if (this.square % 2 == 0){
       this.block.nativeElement.style.cssText="border-color: grey; background-color: lightgrey; text-align: center;";
     }

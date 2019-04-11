@@ -150,6 +150,7 @@ router.post('/play', (req, res) => {
   })
 
   router.post('/getBoardById',(req, res) => {
+    console.log(req.body.boardID)
     Board.findOne({'_id': req.body.boardID}, (error, user) => {
       if (error) {
         console.log(error)
@@ -166,37 +167,42 @@ router.post('/play', (req, res) => {
     var diff = req.body.diff
     var id = req.userID
 
+    console.log(time)
+    console.log(diff)
+    console.log(id)
     User.findOne({'_id': id}, (error, user) => {
       if (error) {
         console.log(error)
       } else {
-            //return res.send(user
+        console.log(savedUser)
+        var savedUser = user
+        //return res.send(user)
+        if (diff == 0){
+          if (savedUser.HSEasy > time){
+            User.findOneAndUpdate(
+               {'_id': id}, {$set: {'HSEasy': time}}, function(err, result){
+                 return res.send(result);
+            })
+          }
+        }
+        else if (diff == 1){
+          if (savedUser.HSMedium > time){
+            User.findOneAndUpdate(
+               {'_id': id}, {$set: {'HSMedium': time}}, function(err, result){
+                 return res.send(result);
+            })
+          }
+        }
+        else if (diff == 2){
+          if (savedUser.HSHard > time){
+            User.findOneAndUpdate(
+               {'_id': id}, {$set: {'HSHard': time}}, function(err, result){
+                 return res.send(result);
+            })
+          }
+        }
       }
     })
-    if (diff == 0){
-      if (user.HSEasy > time){
-        User.findOneAndUpdate(
-           {'_id': id}, {$set: {'HSEasy': time}}, function(err, result){
-             return res.send(result);
-        })
-      }
-    }
-    else if (diff == 1){
-      if (user.HSMedium > time){
-        User.findOneAndUpdate(
-           {'_id': id}, {$set: {'HSMedium': time}}, function(err, result){
-             return res.send(result);
-        })
-      }
-    }
-    else if (diff == 2){
-      if (user.HSHard > time){
-        User.findOneAndUpdate(
-           {'_id': id}, {$set: {'HSHard': time}}, function(err, result){
-             return res.send(result);
-        })
-      }
-    }
   })
 
 module.exports = router
