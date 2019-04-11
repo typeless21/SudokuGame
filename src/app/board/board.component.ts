@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
+import { AuthService } from '../auth.service';
 import { BlockComponent } from '../block/block.component';
-
 
 @Component({
   selector: 'app-board',
@@ -13,26 +13,46 @@ export class BoardComponent implements OnInit {
   numbers: number[];
   @ViewChildren(BlockComponent) blockComponents : QueryList<BlockComponent>;
   html: String;
+  message: string;
+  result: any;
 
-  constructor() {
-    var numberString = "029657841745831296618249375193468527276195483854372619432716958587923164961584732";
-    this.numbers = [];
-    for (var x = 0; x < numberString.length; x++){
-      var number = Number(numberString.charAt(x));
-      this.numbers.push(number)
-    }
-    this.html = "<ng-template block-host></ng-template> 121212";
+  constructor(private _auth: AuthService) {5
+
     //this.numbers = Array(81).fill(0).map((x,i)=>i); // [0,1,2..80]
   }
 
   ngOnInit() {
+    this._auth.currentMessage.subscribe(message => this.message = message)
+
+    var diffData = <any>{}
+    diffData.diff = this.message
+    this._auth.setDiff(diffData)
+      .subscribe(
+        res => {
+          this.result = res
+          this.loadBoard()
+          //this._router.navigate(['']) // Change later
+        },
+        err => console.log(err)
+    )
+
+
     //this.blockComponents.changes.subscribe(c => console.log(this.blockComponents.toArray()));
     //console.log(this.inputComponents.toArray());
   }
 
   ngAfterViewInit(){
-    this.blockComponents.changes.subscribe(c => console.log(this.blockComponents.toArray()));
+    this.blockComponents.changes.subscribe(c => this.blockComponents.toArray());
     //console.log(this.blockComponents.toArray());
+  }
+
+  loadBoard(){
+    var numberString = this.result.board;
+    this.numbers = [];
+    for (var x = 0; x < numberString.length; x++){
+      var number = Number(numberString.charAt(x));
+      this.numbers.push(number)
+    }
   }
 
   onClickMe(){
@@ -94,6 +114,9 @@ export class BoardComponent implements OnInit {
       }
     }
   }
+
+
+
 }
 
 function completed(array) {
