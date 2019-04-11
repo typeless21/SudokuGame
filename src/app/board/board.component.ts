@@ -158,6 +158,7 @@ export class BoardComponent implements OnInit {
     squares.push([],[],[],[],[],[],[],[],[]);
     for(let block of this.blockComponents.toArray()){
       if(block.isNumber == true){
+        console.log(block.value)
         rows[block.row].push(Number(block.value));
         cols[block.col].push(Number(block.value));
         squares[block.square].push(Number(block.value));
@@ -200,6 +201,17 @@ export class BoardComponent implements OnInit {
       }
       if (gameCompleted){
         console.log("CONGRATS U WIN");
+        var gameData = <any>{}
+        gameData.diff = this.diff
+        gameData.time = this.time
+        this._auth.updateHS(gameData)
+          .subscribe(
+            res => {
+              this.result = res
+              console.log(res)
+            },
+            err => console.log(err)
+        )
       }
       else{
         console.log("ANSWER IS WRONG");
