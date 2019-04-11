@@ -4,4 +4,8 @@
     <br>
   </ng-container>
 </ng-container>
-<button (click)="onClickMe()">Click me!</button>
+<button (click)="checkWin()">Submit</button>
+<ng-container *ngIf="_auth.loggedIn()">
+  <button (click)="save()">Save & exit</button>
+</ng-container>
+<p>{{time}}</p>

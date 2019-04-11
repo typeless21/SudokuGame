@@ -18,7 +18,6 @@ import { MainComponent } from './main/main.component';
 import { DifficultyComponent } from './difficulty/difficulty.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

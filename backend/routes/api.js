@@ -111,5 +111,19 @@ router.post('/play', (req, res) => {
   //   }
   // })
 
+  router.post('/save', verifyToken, (req, res) => {
+    let gameData = req.body
+    //let user = new User(userData)
+    console.log(req.userID)
+    console.log(gameData.time)
+    console.log(gameData.board)
+
+    User.findOneAndUpdate(
+       {'_id': req.userID}, {$set: {'saved_game': gameData.board, 'saved_time': gameData.time, 'saved_diff': gameData.diff, 'saved_game_id': gameData.id}}, function(err, result){
+         return res.send(result);
+       }
+    )
+  })
+
 
 module.exports = router

@@ -11,6 +11,7 @@ export class AuthService {
   private _registerUrl = "http://localhost:3000/api/register";
   private _loginUrl = "http://localhost:3000/api/login";
   private _gameUrl = "http://localhost:3000/api/play";
+  private _saveUrl = "http://localhost:3000/api/save";
   constructor(private http: HttpClient,
               private _router: Router) { }
 
@@ -47,5 +48,8 @@ export class AuthService {
     this.messageSource.next(message)
   }
 
+  saveGame(gameData){
+    return this.http.post<any>(this._saveUrl, gameData)
+  }
 
 }
