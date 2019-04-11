@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   setDiff(diff){
-      console.log(diff)
+      //console.log(diff)
       return this.http.post<any>(this._gameUrl, diff)
   }
 

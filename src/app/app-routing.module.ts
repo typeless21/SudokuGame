@@ -8,6 +8,7 @@ import { MainComponent } from './main/main.component';
 import { DifficultyComponent } from './difficulty/difficulty.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { AuthGuard} from './auth.guard';
+import { BoardComponent } from './board/board.component';
 
 //This is my case
 const routes: Routes = [
@@ -15,6 +16,10 @@ const routes: Routes = [
         path: '',
         component: MainComponent,
         //canActivate: [AuthGuard]
+    },
+    {
+        path:'board',
+        component: BoardComponent
     },
     {
         path: 'about',

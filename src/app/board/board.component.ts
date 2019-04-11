@@ -15,6 +15,7 @@ export class BoardComponent implements OnInit {
   html: String;
 
   constructor() {
+    
     var numberString = "029657841745831296618249375193468527276195483854372619432716958587923164961584732";
     this.numbers = [];
     for (var x = 0; x < numberString.length; x++){
@@ -34,6 +35,8 @@ export class BoardComponent implements OnInit {
     this.blockComponents.changes.subscribe(c => console.log(this.blockComponents.toArray()));
     //console.log(this.blockComponents.toArray());
   }
+
+
 
   onClickMe(){
     let allNumbers: boolean = true;
