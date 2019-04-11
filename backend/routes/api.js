@@ -134,7 +134,7 @@ router.post('/play', (req, res) => {
             console.log(result)
         }
       }
-    })
+    )
   })
 
 
