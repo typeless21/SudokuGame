@@ -18,20 +18,8 @@ export class DifficultyComponent implements OnInit {
   ngOnInit() {
     this._auth.currentMessage.subscribe(message => this.message = message)
   }
-
-  setDiff(diff) {
-    this.diffData.diff = diff
-    this._auth.setDiff(this.diffData)
-      .subscribe(
-        res => {
-          console.log(res)
-          this._router.navigate(['']) // Change later
-        },
-        err => console.log(err)
-      )
-  }
-
-  newMessage(diff) {
+  
+  changeDiff(diff) {
     this._auth.changeMessage(diff)
     this._router.navigate(['/board'])
   }
