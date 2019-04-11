@@ -2,7 +2,7 @@
     <ul>
       <li *ngIf="_authService.loggedIn()">
           <!-- <a *ngIf="_authService.checkSave()" routerLink="/about">Continue</a> -->
-          <button *ngIf="_authService.checkSave()" (click)="loginUser()" type="button" >Continue</button>
+          <a *ngIf="_authService.checkSave()" routerLink="/board">Continue</a>
       </li>
       <li>
           <a routerLink="/difficulty">New game</a>

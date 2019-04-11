@@ -12,11 +12,13 @@ import { Router } from '@angular/router';
 
 export class BoardComponent implements OnInit {
 
-  numbers: number[];
+  numbers: number[] = [];
   @ViewChildren(BlockComponent) blockComponents : QueryList<BlockComponent>;
   html: String;
   diff: string;
   result: any;
+  savedBoard: String;
+  default: boolean[] = [];
 
   constructor(private _auth: AuthService,private _router: Router) {
     //this.numbers = Array(81).fill(0).map((x,i)=>i); // [0,1,2..80]
@@ -32,12 +34,34 @@ export class BoardComponent implements OnInit {
         .subscribe(
           res => {
             this.result = res
+            console.log(res)
             this.loadBoard()
           },
           err => console.log(err)
       )
     }
-
+    else{
+      this._auth.getSaveGame()
+        .subscribe(
+          res => {
+            this.result = res
+          },
+          err => console.log(err),
+          complete => {
+            var boardData = <any>{}
+            boardData.boardID = this.result.saved_game_id
+            console.log(boardData)
+            this._auth.getBoardById(boardData)
+              .subscribe(
+                res => {
+                  this.savedBoard = res
+                },
+                err => console.log(err),
+                complete => this.loadSavedBoard()
+            )
+          }
+      )
+    }
   }
 
 
@@ -48,10 +72,35 @@ export class BoardComponent implements OnInit {
 
   loadBoard(){
     var numberString = this.result.board;
-    this.numbers = [];
     for (var x = 0; x < numberString.length; x++){
       var number = Number(numberString.charAt(x));
+      if (number == 0){
+        this.default.push(false)
+      }
+      else{
+        this.default.push(true)
+      }
       this.numbers.push(number)
+    }
+    this.startTimer()
+    this._auth.changeDiff(null)
+  }
+
+  loadSavedBoard(){
+    let boardSaved = this.result.saved_game
+    let boardTemplate = this.savedBoard.board
+
+    this.numbers = [];
+    for (var x = 0; x < boardSaved.length; x++){
+      let numberSaved = Number(boardSaved.charAt(x));
+      let numberTemplate = Number(boardTemplate.charAt(x));
+      if (numberSaved == numberTemplate && numberSaved != 0){
+        this.default.push(true)
+      }
+      else{
+        this.default.push(false)
+      }
+      this.numbers.push(numberSaved)
     }
     this.startTimer()
     this._auth.changeDiff(null)

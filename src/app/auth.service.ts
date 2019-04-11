@@ -13,6 +13,8 @@ export class AuthService {
   private _gameUrl = "http://localhost:3000/api/play";
   private _saveUrl = "http://localhost:3000/api/save";
   private _checkSaveUrl = "http://localhost:3000/api/checkSave";
+  private _getSaveGame = "http://localhost:3000/api/getSave"
+  private _getBoardById = "http://localhost:3000/api/getBoardById"
   constructor(private http: HttpClient,
               private _router: Router) { }
 
@@ -57,6 +59,14 @@ export class AuthService {
 
   saveGame(gameData){
     return this.http.post<any>(this._saveUrl, gameData)
+  }
+
+  getSaveGame(){
+    return this.http.get<any>(this._getSaveGame)
+  }
+
+  getBoardById(boardData){
+    return this.http.post<any>(this._getBoardById, boardData)
   }
 
 }

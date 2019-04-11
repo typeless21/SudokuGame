@@ -15,7 +15,7 @@ export class BlockComponent implements OnInit {
   @Input() col: number;
   @Input() square: number;
   @ViewChild('block') block;
-  isGiven: boolean;
+  @Input() default: boolean;
 
   onChange(target: any): void {
     this.value = target.value;
@@ -76,12 +76,12 @@ export class BlockComponent implements OnInit {
     else if (this.row / 3 < 3 && this.col / 3 < 3){
       this.square = 8;
     }
-    if(this.value != "0"){
+    if(this.default == true){
       this.block.nativeElement.disabled = true;
       this.isNumber = true;
     }
-    else{
-      this.value = "";
+    else if (this.value==0){
+      this.value = ""
     }
     if (this.square % 2 == 0){
       this.block.nativeElement.style.cssText="border-color: grey; background-color: lightgrey; text-align: center;";

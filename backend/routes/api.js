@@ -126,7 +126,7 @@ router.post('/play', (req, res) => {
     console.log(gameData.time)
     console.log(gameData.board)
 
-    User.findOne({_id: req.userID}, (error, user) => {
+    User.findOne({'_id': req.userID}, (error, user) => {
       if (error) {
         console.log(error)
       } else {
@@ -137,5 +137,28 @@ router.post('/play', (req, res) => {
     )
   })
 
+  router.get('/getSave', verifyToken, (req, res) => {
+    User.findOne({'_id': req.userID}, (error, user) => {
+      if (error) {
+        console.log(error)
+      } else {
+            return res.send(user)
+            //console.log(user)
+        }
+      }
+    )
+  })
+
+  router.post('/getBoardById',(req, res) => {
+    Board.findOne({'_id': req.body.boardID}, (error, user) => {
+      if (error) {
+        console.log(error)
+      } else {
+            return res.send(user)
+            //console.log(user)
+        }
+      }
+    )
+  })
 
 module.exports = router
