@@ -10,7 +10,7 @@ import { Component, OnInit, OnChanges, Input, ViewChild} from '@angular/core';
 export class BlockComponent implements OnInit {
 
   @Input() value: string;
-  isNumber: boolean;
+  isNumber: boolean = false;
   @Input() row: number;
   @Input() col: number;
   @Input() square: number;
