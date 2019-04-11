@@ -9,6 +9,7 @@ export class AuthService {
 
   private _registerUrl = "http://localhost:3000/api/register";
   private _loginUrl = "http://localhost:3000/api/login";
+  private _gameUrl = "http://localhost:3000/api/play";
   constructor(private http: HttpClient,
               private _router: Router) { }
 
@@ -32,6 +33,11 @@ export class AuthService {
 
   getToken(){
     return localStorage.getItem('token')
+  }
+
+  setDiff(diff){
+      console.log(diff)
+      return this.http.post<any>(this._gameUrl, diff)
   }
 
 

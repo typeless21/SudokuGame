@@ -84,5 +84,32 @@ router.get('/about', verifyToken, (req, res) => {
   res.json(req.userID)
 })
 
+router.post('/play', (req, res) => {
+  let diff = req.body
+     Board.find({diff: diff.diff}, function(err, result){
+       let nr = Math.floor(Math.random() * result.length)
+       res.send(result[nr])
+     });
+  })
+  // Board.findOne({_id: userData.username}, (error, user) => {
+  //   if (error) {
+  //     console.log(error)
+  //   } else {
+  //     if (!user) {
+  //       res.status(401).send('Invalid username or password')
+  //     } else
+  //       if (user.password !== userData.password){
+  //         res.status(401).send('Invalid password or username')
+  //       } else {
+  //         let payload = { userid: user._id }
+  //         //console.log(user._id)
+  //         let token = jwt.sign(payload, 'key')
+  //         //console.log(token);
+  //         res.status(200).send({token})
+  //         //console.log(user)
+  //       }
+  //   }
+  // })
+
 
 module.exports = router
