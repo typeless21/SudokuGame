@@ -125,5 +125,21 @@ router.post('/play', (req, res) => {
     )
   })
 
+  router.post('/checkSave', verifyToken, (req, res) => {
+    console.log(req.userID)
+    console.log(gameData.time)
+    console.log(gameData.board)
+
+    User.findOne({_id: req.userID}, (error, user) => {
+      if (error) {
+        console.log(error)
+      } else {
+            return res.send(result)
+            console.log(result)
+        }
+      }
+    })
+  })
+
 
 module.exports = router

@@ -1,8 +1,9 @@
 <div class="root">
     <ul>
-      <!-- <li>
-          <a *ngIf="_authService.loggedIn()" routerLink="/about">Continue last game</a>
-      </li> -->
+      <li *ngIf="_authService.loggedIn()">
+          <!-- <a *ngIf="_authService.checkSave()" routerLink="/about">Continue</a> -->
+          <button *ngIf="_authService.checkSave()" (click)="loginUser()" type="button" >Continue</button>
+      </li>
       <li>
           <a routerLink="/difficulty">New game</a>
       </li>

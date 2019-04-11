@@ -12,6 +12,7 @@ export class AuthService {
   private _loginUrl = "http://localhost:3000/api/login";
   private _gameUrl = "http://localhost:3000/api/play";
   private _saveUrl = "http://localhost:3000/api/save";
+  private _checkSaveUrl = "http://localhost:3000/api/checkSave";
   constructor(private http: HttpClient,
               private _router: Router) { }
 
@@ -31,6 +32,12 @@ export class AuthService {
   logoutUser() {
       localStorage.removeItem('token')
       this._router.navigate([''])
+  }
+
+  checkSave(user){
+    if(this.loggedIn()){
+        return this.http.post<any>(this._checkSaveUrl, user)
+    }
   }
 
   getToken(){
